@@ -237,9 +237,9 @@ logBtn.addEventListener("click", async () => {
   }
 
   // 2) Insert into your logged_entries table
-  const { error } = await supabase.from("logged_entries").insert({
+  const { error } = await supabase.from("entries").insert({
     user_id: user.id,
-    entry_date: todayISO,
+    date: todayISO,
     kcal,
     protein,
   });
