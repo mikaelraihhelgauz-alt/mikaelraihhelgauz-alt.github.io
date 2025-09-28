@@ -1,3 +1,4 @@
+// SUPABASE INTERACTIONS -----------------------------
 const supabaseUrl = "https://mxqrhijblmnyeusciipa.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14cXJoaWpibG1ueWV1c2NpaXBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwMDYwNDcsImV4cCI6MjA3NDU4MjA0N30.d7EiLecW7fOqkXrjUx8E0EMWxzyRwvSuc7rnhhiyPzI"; 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -266,30 +267,6 @@ document.querySelectorAll(".tab-button").forEach(btn => {
     }
   });
 });
-
-
-async function saveEntry(date, kcal, protein) {
-  const user = (await supabase.auth.getUser()).data.user;
-  if (!user) {
-    alert("Please log in first");
-    return;
-  }
-  const { error } = await supabase
-    .from("entries")
-    .insert([{ user_id: user.id, date, kcal, protein }]);
-  if (error) alert(error.message);
-}
-
-async function loadEntries() {
-  const { data, error } = await supabase
-    .from("entries")
-    .select("date, kcal, protein")
-    .order("date");
-  if (error) alert(error.message);
-  return data;
-}
-
-
 
 
 // ---- Tab switching ----
