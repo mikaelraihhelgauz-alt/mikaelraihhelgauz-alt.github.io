@@ -3,6 +3,8 @@ const supabaseUrl = "https://mxqrhijblmnyeusciipa.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14cXJoaWpibG1ueWV1c2NpaXBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwMDYwNDcsImV4cCI6MjA3NDU4MjA0N30.d7EiLecW7fOqkXrjUx8E0EMWxzyRwvSuc7rnhhiyPzI"; 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+// Store logs here to drive charts
+const logs = [];  // { date: '…', kcal: number, protein: number }
 
 // Sign up
 document.getElementById("signupBtn").onclick = async () => {
@@ -95,8 +97,7 @@ const logTableBody = document.querySelector("#logTable tbody");
 const proteinCanvas = document.getElementById("proteinChart");
 const kcalCanvas = document.getElementById("kcalChart");
 
-// Store logs here to drive charts
-const logs = [];  // { date: '…', kcal: number, protein: number }
+
 
 // ------------------------
 // Totals helpers (unchanged from your latest version)
