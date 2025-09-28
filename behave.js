@@ -29,7 +29,7 @@ async function loadLoggedEntries() {
     .select("date,kcal,protein")
     .order("date", { ascending: true });
 
-  if (error) { console.error(error); return; }
+  if (error) { alert("Load failed: " + error.message); console.error(error); return; }
 
   // repaint table + charts
   logTableBody.innerHTML = "";
@@ -60,6 +60,16 @@ supabase.auth.onAuthStateChange((event, session) => {
     renderCharts();
   }
 });
+
+(async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("trackerPage").style.display = "block";
+    await loadLoggedEntries();     // initial load
+  }
+})();
+
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
     const { error } = await supabase.auth.signOut();
