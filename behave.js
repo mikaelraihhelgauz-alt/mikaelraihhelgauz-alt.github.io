@@ -5,6 +5,10 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // Store logs here to drive charts
 const logs = [];  // { date: '…', kcal: number, protein: number }
+// New: chart canvases
+const proteinCanvas = document.getElementById("proteinChart");
+const kcalCanvas = document.getElementById("kcalChart");
+
 
 // Sign up
 document.getElementById("signupBtn").onclick = async () => {
@@ -88,11 +92,6 @@ const table = document.getElementById("nutritionTable").querySelector("tbody");
 const totalsCell = document.getElementById("totals");
 const logBtn = document.getElementById("logDayBtn");
 const logTableBody = document.querySelector("#logTable tbody");
-
-// New: chart canvases
-const proteinCanvas = document.getElementById("proteinChart");
-const kcalCanvas = document.getElementById("kcalChart");
-
 
 
 // ------------------------
