@@ -22,15 +22,42 @@ document.getElementById("loginBtn").onclick = async () => {
   if (error) alert(error.message);
 };
 
+// Function to load old entries on auth.
+async function loadLoggedEntries() {
+  const { data, error } = await supabase
+    .from("entries") // or "logged_entries"
+    .select("date,kcal,protein")
+    .order("date", { ascending: true });
+
+  if (error) { console.error(error); return; }
+
+  // repaint table + charts
+  logTableBody.innerHTML = "";
+  logs.length = 0;
+  for (const r of data) {
+    const d = new Date(r.date + "T00:00:00");
+    const dateStr = d.toLocaleDateString();
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${dateStr}</td><td>${r.kcal}</td><td>${r.protein}</td>`;
+    logTableBody.appendChild(tr);
+    logs.push({ date: dateStr, kcal: r.kcal, protein: r.protein });
+  }
+  renderCharts();
+}
+
 supabase.auth.onAuthStateChange((event, session) => {
   if (session) {
     // logged in
     document.getElementById("loginPage").style.display = "none";
     document.getElementById("trackerPage").style.display = "block";
+    await loadLoggedEntries();
   } else {
     // logged out
     document.getElementById("loginPage").style.display = "block";
     document.getElementById("trackerPage").style.display = "none";
+    logTableBody.innerHTML = "";   // optional: clear UI
+    logs.length = 0;
+    renderCharts();
   }
 });
 
