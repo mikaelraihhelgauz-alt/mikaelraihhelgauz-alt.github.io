@@ -69,7 +69,7 @@ supabase.auth.onAuthStateChange(async (_event, session) => {
   }
 });
 
-
+/*
 (async () => {
   const { data: { session } } = await supabase.auth.getSession();
   if (session) {
@@ -78,6 +78,7 @@ supabase.auth.onAuthStateChange(async (_event, session) => {
     await loadLoggedEntries();     // initial load
   }
 })();
+*/
 
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
