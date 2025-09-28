@@ -47,21 +47,17 @@ async function loadLoggedEntries() {
   renderCharts();
 }
 
-supabase.auth.onAuthStateChange((event, session) => {
+supabase.auth.onAuthStateChange(async (_event, session) => {
   if (session) {
-    // logged in
     document.getElementById("loginPage").style.display = "none";
     document.getElementById("trackerPage").style.display = "block";
-    await loadLoggedEntries();
+    await loadLoggedEntries(); // ok now
   } else {
-    // logged out
     document.getElementById("loginPage").style.display = "block";
     document.getElementById("trackerPage").style.display = "none";
-    //logTableBody.innerHTML = "";   // optional: clear UI
-    //logs.length = 0;
-    //renderCharts();
   }
 });
+
 
 (async () => {
   const { data: { session } } = await supabase.auth.getSession();
