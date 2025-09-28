@@ -223,50 +223,55 @@ window.addEventListener("resize", renderCharts);
 
 // ------------------------
 // LOG THE DAY: append + clear + update charts
-logBtn.addEventListener("click", () => {
+logBtn.addEventListener("click", async () => {
   const { kcal, protein } = computeTotals();
   if (kcal === 0 && protein === 0) return; // avoid empty logs
 
-  const today = new Date().toLocaleDateString();
+  const todayISO = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
-  // 1) Update table in Logged Entries
+  // 1) Get the logged-in user
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    alert("Please log in first");
+    return;
+  }
+
+  // 2) Insert into your logged_entries table
+  const { error } = await supabase.from("logged_entries").insert({
+    user_id: user.id,
+    entry_date: todayISO,
+    kcal,
+    protein,
+  });
+  if (error) {
+    alert("Save failed: " + error.message);
+    return;
+  }
+
+  // 3) Append to table UI
   const tr = document.createElement("tr");
-  tr.innerHTML = `
-    <td>${today}</td>
-    <td>${kcal}</td>
-    <td>${protein}</td>
-  `;
+  tr.innerHTML = `<td>${new Date(todayISO).toLocaleDateString()}</td>
+                  <td>${kcal}</td>
+                  <td>${protein}</td>`;
   logTableBody.appendChild(tr);
 
-  // 2) Update in-memory logs (drives charts)
-  logs.push({ date: today, kcal, protein });
+  // 4) Update in-memory logs + charts
+  logs.push({ date: new Date(todayISO).toLocaleDateString(), kcal, protein });
+  renderCharts();
 
-  // 3) Clear the input table back to one empty row
-  table.innerHTML = `
-    <tr>
+  // 5) Reset inputs
+  table.innerHTML = `<tr>
       <td><input type="number" placeholder="0"></td>
       <td><input type="number" placeholder="0"></td>
-    </tr>
-  `;
-  table.querySelectorAll("input").forEach(input => {
-    input.addEventListener("input", handleInput);
-  });
+    </tr>`;
+  table.querySelectorAll("input").forEach(input =>
+    input.addEventListener("input", handleInput)
+  );
   updateTotals();
 
-  // 4) Re-render charts
-  renderCharts();
+  alert("Saved to Supabase!");
 });
 
-// Optional: when switching to the "Logged Entries" tab, re-render (ensures proper size)
-document.querySelectorAll(".tab-button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const target = btn.getAttribute("data-tab");
-    if (target === "newtab") {
-      // delay to allow layout to settle
-      requestAnimationFrame(renderCharts);
-    }
-  });
-});
 
 
 // ---- Tab switching ----
