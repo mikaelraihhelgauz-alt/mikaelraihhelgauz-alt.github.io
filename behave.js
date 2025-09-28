@@ -42,7 +42,13 @@ async function loadLoggedEntries() {
     .select("date,kcal,protein")
     .order("date", { ascending: true });
 
-  if (error) { alert("Load failed: " + error.message); console.error(error); return; }
+  console.log("loadLoggedEntries result:", { data, error });
+
+  if (error) {
+    alert("Load failed: " + error.message);
+    console.error(error);
+    return;
+  }
 
   // repaint table + charts
   logTableBody.innerHTML = "";
