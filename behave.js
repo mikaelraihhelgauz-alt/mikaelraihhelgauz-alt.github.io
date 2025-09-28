@@ -50,14 +50,14 @@ supabase.auth.onAuthStateChange((event, session) => {
     // logged in
     document.getElementById("loginPage").style.display = "none";
     document.getElementById("trackerPage").style.display = "block";
-    await loadLoggedEntries();
+    //await loadLoggedEntries();
   } else {
     // logged out
     document.getElementById("loginPage").style.display = "block";
     document.getElementById("trackerPage").style.display = "none";
-    logTableBody.innerHTML = "";   // optional: clear UI
-    logs.length = 0;
-    renderCharts();
+    //logTableBody.innerHTML = "";   // optional: clear UI
+    //logs.length = 0;
+    //renderCharts();
   }
 });
 
