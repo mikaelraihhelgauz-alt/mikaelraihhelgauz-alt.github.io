@@ -33,6 +33,17 @@ supabase.auth.onAuthStateChange((event, session) => {
   }
 });
 
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      alert("Error signing out: " + error.message);
+    } else {
+      alert("Signed out!");
+      // Optional: redirect or update UI
+      window.location.href = "index.html"; 
+    }
+  });
+
 
 
 // ------------------------
