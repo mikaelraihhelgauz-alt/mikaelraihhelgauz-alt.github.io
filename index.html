@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kcal & Protein Tracker</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+   <div id="loginPage" class="page">
+    <div class="login-box">
+      <h2>Welcome – please log in</h2>
+      <input id="email" type="email" placeholder="Email">
+      <input id="password" type="password" placeholder="Password">
+      <div class="login-actions">
+        <button id="signupBtn">Sign up</button>
+        <button id="loginBtn">Log in</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div id="trackerPage" class="page" style="display:none;">
+
+      <!-- Tab buttons -->
+  <div class="tabs">
+    <button class="tab-button active" data-tab="tracker">Tracker</button>
+    <button class="tab-button" data-tab="newtab">New Tab</button>
+  </div>
+  <!-- Tab content -->
+  <div id="tracker" class="tab-content active">
+    <h2>Food Tracker</h2>
+    <table id="nutritionTable">
+      <thead>
+        <tr>
+          <th>Kcal</th>
+          <th>Protein (g)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" placeholder="0"></td>
+          <td><input type="number" placeholder="0"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total:</th>
+          <th id="totals">0 kcal / 0 g</th>
+        </tr>
+      </tfoot>
+    </table>
+    <button id="logDayBtn">Log the day</button>
+  </div>
+
+  <div id="newtab" class="tab-content">
+    <h2>Logged Entries</h2>
+        <table id="logTable">
+         <thead>
+            <tr>
+                <th>Date</th>
+                <th>Kcal</th>
+                <th>Protein (g)</th>
+            </tr>
+        </thead>
+        <tbody>
+      <!-- new rows will be appended here -->
+        </tbody>
+    </table>
+
+      <div class="charts">
+    <div class="chart-block">
+      <h3>Protein (g)</h3>
+      <canvas id="proteinChart"></canvas>
+    </div>
+    <div class="chart-block">
+      <h3>Kcal</h3>
+      <canvas id="kcalChart"></canvas>
+    </div>
+  </div>
+
+    </div>
+    </div>
+  
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="behave.js"></script>
+  
+</body>
+</html>
