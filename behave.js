@@ -9,6 +9,13 @@ const logs = [];  // { date: '…', kcal: number, protein: number }
 const proteinCanvas = document.getElementById("proteinChart");
 const kcalCanvas = document.getElementById("kcalChart");
 
+// ------------------------
+// Grabs you already have:
+const table = document.getElementById("nutritionTable").querySelector("tbody");
+const totalsCell = document.getElementById("totals");
+const logBtn = document.getElementById("logDayBtn");
+const logTableBody = document.querySelector("#logTable tbody");
+
 
 // Sign up
 document.getElementById("signupBtn").onclick = async () => {
@@ -83,15 +90,6 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
       window.location.href = "index.html"; 
     }
   });
-
-
-
-// ------------------------
-// Grabs you already have:
-const table = document.getElementById("nutritionTable").querySelector("tbody");
-const totalsCell = document.getElementById("totals");
-const logBtn = document.getElementById("logDayBtn");
-const logTableBody = document.querySelector("#logTable tbody");
 
 
 // ------------------------
@@ -258,7 +256,7 @@ window.addEventListener("resize", renderCharts);
 // LOG THE DAY: append + clear + update charts
 logBtn.addEventListener("click", async () => {
   const { kcal, protein } = computeTotals();
-  if (kcal === 0 && protein === 0) return; // avoid empty logs
+  //if (kcal === 0 && protein === 0) return; // avoid empty logs
 
   const todayISO = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
