@@ -50,7 +50,7 @@ supabase.auth.onAuthStateChange((event, session) => {
     // logged in
     document.getElementById("loginPage").style.display = "none";
     document.getElementById("trackerPage").style.display = "block";
-    //await loadLoggedEntries();
+    await loadLoggedEntries();
   } else {
     // logged out
     document.getElementById("loginPage").style.display = "block";
